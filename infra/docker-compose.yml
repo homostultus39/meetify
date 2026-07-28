@@ -1,0 +1,63 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    env_file:
+      - .prod.env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - meetify-network
+  
+  redis:
+    image: redis:7-alpine
+    env_file:
+      - .prod.env
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    command: redis-server --requirepass ${REDIS_PASSWORD} --rename-command REPLICAOF "" --rename-command SLAVEOF "" --rename-command CONFIG "" --rename-command DEBUG "" --rename-command SHUTDOWN "" --rename-command FLUSHDB "" --rename-command FLUSHALL "" --rename-command EVAL "" --rename-command SCRIPT ""
+    volumes:
+      - redis_data:/data
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a \"${REDIS_PASSWORD}\" ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      - postgres
+    networks:
+      - meetify-network
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    env_file:
+      - .prod.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    networks:
+      - meetify-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  meetify-network:
+    driver: bridge

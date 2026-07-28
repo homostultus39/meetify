@@ -1,0 +1,3 @@
+from management.logger import configure_logger
+
+logger = configure_logger("TIME_SLOTS")
