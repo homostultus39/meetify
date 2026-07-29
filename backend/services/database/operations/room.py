@@ -3,10 +3,10 @@ from datetime import date
 from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from services.database.models import RoomModel
 from services.database.models.booking import BookingModel
 from services.database.models.room_time_slot import RoomTimeSlotModel
 from services.database.models.time_slot import TimeSlotModel
-from services.database.models import RoomModel
 
 
 async def get_all_rooms(session: AsyncSession) -> list[RoomModel]:

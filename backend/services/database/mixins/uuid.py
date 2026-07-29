@@ -1,6 +1,8 @@
+from uuid import uuid4
+
 from sqlalchemy import UUID
 from sqlalchemy.orm import Mapped, mapped_column
-from uuid import uuid4
+
 
 class UUIDMixin:
     id: Mapped[UUID] = mapped_column(

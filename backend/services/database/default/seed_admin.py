@@ -1,10 +1,9 @@
+from api.auth.management.pwd_manager import PWDManager
+from management.settings import get_settings
 from services.database.connection import sessionmaker
-from services.database.operations.user import create_user, get_user_by_username
-
 from services.database.enums import UserRoles
 from services.database.logger import logger
-from management.settings import get_settings
-from api.auth.management.pwd_manager import PWDManager
+from services.database.operations.user import create_user, get_user_by_username
 
 
 async def seed_admin() -> None:

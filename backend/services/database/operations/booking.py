@@ -1,9 +1,10 @@
 from datetime import date
 from uuid import UUID
 
+from sqlalchemy import select
+
 from services.database.connection import AsyncSession
 from services.database.models.booking import BookingModel
-from sqlalchemy import select
 
 
 async def create_record(

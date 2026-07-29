@@ -1,7 +1,10 @@
 from uuid import UUID
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+
 from services.database.models.room_time_slot import RoomTimeSlotModel
+
 
 async def room_time_slot_exists(session: AsyncSession, room_id: UUID, time_slot_id: UUID) -> bool:
     result = await session.execute(

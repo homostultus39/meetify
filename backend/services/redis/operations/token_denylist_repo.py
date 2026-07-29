@@ -1,5 +1,5 @@
-from redis.asyncio import Redis
 from services.redis.connection import redis_client
+
 
 class TokenRepository:
     @staticmethod

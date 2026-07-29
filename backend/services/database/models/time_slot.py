@@ -1,9 +1,10 @@
 from datetime import time
-from sqlalchemy import UniqueConstraint, Time
+
+from sqlalchemy import Time, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column
 
+from services.database.mixins import TimestampMixin, UUIDMixin
 from services.database.models.base import Base
-from services.database.mixins import UUIDMixin, TimestampMixin
 
 
 class TimeSlotModel(Base, UUIDMixin, TimestampMixin):

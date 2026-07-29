@@ -2,7 +2,7 @@ from datetime import date, datetime, time, timedelta
 
 from services.database.connection import sessionmaker
 from services.database.logger import logger
-from services.database.operations.time_slot import time_slot_exists, create_time_slot
+from services.database.operations.time_slot import create_time_slot, time_slot_exists
 
 
 async def seed_time_slots() -> None:

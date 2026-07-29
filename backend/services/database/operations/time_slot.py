@@ -1,6 +1,7 @@
 from datetime import time
-from sqlalchemy.ext.asyncio import AsyncSession
+
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from services.database.models.time_slot import TimeSlotModel
 

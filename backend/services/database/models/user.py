@@ -1,8 +1,8 @@
-from sqlalchemy.types import String, Enum
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.types import Enum, String
 
-from services.database.mixins import UUIDMixin, TimestampMixin
 from services.database.enums import UserRoles
+from services.database.mixins import TimestampMixin, UUIDMixin
 from services.database.models.base import Base
 
 

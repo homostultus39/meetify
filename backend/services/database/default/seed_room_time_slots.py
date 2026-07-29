@@ -1,9 +1,13 @@
 from sqlalchemy import select
-from services.database.logger import logger
+
 from services.database.connection import sessionmaker
+from services.database.logger import logger
 from services.database.models.room import RoomModel
 from services.database.models.time_slot import TimeSlotModel
-from services.database.operations.room_time_slot import room_time_slot_exists, create_room_time_slot
+from services.database.operations.room_time_slot import (
+    create_room_time_slot,
+    room_time_slot_exists,
+)
 
 
 async def seed_room_time_slots() -> None:

@@ -1,7 +1,9 @@
 from typing import Annotated
+
 from fastapi import Depends
-from management.settings import get_settings
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
+
+from management.settings import get_settings
 
 settings = get_settings()
 

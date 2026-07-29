@@ -1,11 +1,12 @@
 from logging.config import fileConfig
 
-from sqlalchemy import engine_from_config
-from sqlalchemy import pool
-from management.settings import get_settings
-from services.database.models import Base, BookingModel, RoomTimeSlotModel, RoomModel, TimeSlotModel, UserModel
-
 from alembic import context
+from sqlalchemy import engine_from_config, pool
+
+from management.settings import get_settings
+from services.database.models import (
+    Base,
+)
 
 settings = get_settings()
 

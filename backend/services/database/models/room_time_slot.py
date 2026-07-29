@@ -1,8 +1,8 @@
 from sqlalchemy import ForeignKey, UniqueConstraint
-from sqlalchemy.types import UUID
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.types import UUID
 
-from services.database.mixins import UUIDMixin, TimestampMixin
+from services.database.mixins import TimestampMixin, UUIDMixin
 from services.database.models.base import Base
 
 

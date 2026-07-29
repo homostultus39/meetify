@@ -1,8 +1,8 @@
 from sqlalchemy import Integer
 from sqlalchemy.orm import Mapped, mapped_column
 
-from services.database.models.base import Base
 from services.database.mixins import TimestampMixin, UUIDMixin
+from services.database.models.base import Base
 
 
 class RoomModel(Base, UUIDMixin, TimestampMixin):

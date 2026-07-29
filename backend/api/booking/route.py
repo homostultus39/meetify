@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from api.booking.crud import create_router, read_router, delete_router
 
+from api.booking.crud import create_router, delete_router, read_router
 
 router = APIRouter(prefix="/booking", tags=["Booking"])
 

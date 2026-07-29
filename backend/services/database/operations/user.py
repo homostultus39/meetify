@@ -1,9 +1,9 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from services.database.models import UserModel
 from services.database.enums import UserRoles
 from services.database.logger import logger
+from services.database.models import UserModel
 
 
 async def create_user(

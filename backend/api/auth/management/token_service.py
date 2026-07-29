@@ -1,12 +1,12 @@
-import jwt
 import secrets
-from typing import Dict
 from datetime import datetime, timedelta
 
+import jwt
+
+from api.exceptions.auth import TokenExpiredError, TokenInvalidError
 from management.settings import get_settings
 from services.database.models import UserModel
 from services.redis.operations.token_denylist_repo import TokenRepository
-from api.auth.exceptions import TokenExpiredError, TokenInvalidError
 
 settings = get_settings()
 
@@ -16,7 +16,7 @@ class TokenService:
         return secrets.token_urlsafe(16)
 
     @staticmethod
-    async def reset_token_pair(user: UserModel, exp_refresh_token: str | None = None) -> Dict:
+    async def reset_token_pair(user: UserModel, exp_refresh_token: str | None = None) -> dict:
         if exp_refresh_token:
             refresh_payload = TokenService.decode_token(exp_refresh_token)
             
@@ -57,7 +57,7 @@ class TokenService:
         )
 
     @staticmethod
-    def decode_token(token: str) -> Dict:
+    def decode_token(token: str) -> dict:
         try:
             payload = jwt.decode(token, settings.secret_key, algorithms=settings.algorithm)
             return payload

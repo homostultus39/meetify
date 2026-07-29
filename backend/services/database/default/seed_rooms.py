@@ -1,6 +1,6 @@
-from services.database.logger import logger
 from services.database.connection import sessionmaker
-from services.database.operations.room import room_exists, create_new_room
+from services.database.logger import logger
+from services.database.operations.room import create_new_room, room_exists
 
 
 async def seed_rooms() -> None:

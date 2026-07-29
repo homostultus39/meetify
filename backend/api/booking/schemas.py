@@ -1,6 +1,8 @@
 from datetime import date
-from pydantic import BaseModel
 from uuid import UUID
+
+from pydantic import BaseModel
+
 
 class BookingResponseScheme(BaseModel):
     id: UUID

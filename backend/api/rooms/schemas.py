@@ -1,6 +1,7 @@
-from pydantic import BaseModel
-from uuid import UUID
 from datetime import time
+from uuid import UUID
+
+from pydantic import BaseModel
 
 
 class RoomsResponseSchema(BaseModel):
