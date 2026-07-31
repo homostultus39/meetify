@@ -1,0 +1,684 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "meetify",
+    "description": "service for booking meeting rooms",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Authorization"
+        ],
+        "summary": "Login",
+        "description": "Аутентификация",
+        "operationId": "login_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginScheme"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponseScheme"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": [
+          "Authorization"
+        ],
+        "summary": "Refresh Token",
+        "description": "Обновление пары токенов",
+        "operationId": "refresh_token_auth_refresh_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TokenResponseScheme"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": [
+          "Authorization"
+        ],
+        "summary": "Logout",
+        "description": "Выход из аккаунта",
+        "operationId": "logout_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/time_slots/": {
+      "get": {
+        "tags": [
+          "Time slots"
+        ],
+        "summary": "Get Time Slots",
+        "description": "Получить список всех временных слотов",
+        "operationId": "get_time_slots_time_slots__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TimeSlotsResponseSchema"
+                  },
+                  "type": "array",
+                  "title": "Response Get Time Slots Time Slots  Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/rooms/": {
+      "get": {
+        "tags": [
+          "Rooms"
+        ],
+        "summary": "Get Rooms",
+        "description": "Получить список всех комнат в системе",
+        "operationId": "get_rooms_rooms__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RoomsResponseSchema"
+                  },
+                  "type": "array",
+                  "title": "Response Get Rooms Rooms  Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/rooms/availability": {
+      "get": {
+        "tags": [
+          "Rooms"
+        ],
+        "summary": "Get Rooms Availabilities",
+        "description": "Получить доступность всех комнат",
+        "operationId": "get_rooms_availabilities_rooms_availability_get",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "target_date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "Target Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RoomAvailabilityScheme"
+                  },
+                  "title": "Response Get Rooms Availabilities Rooms Availability Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/booking/": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "summary": "Get All Records",
+        "description": "Получить все записи",
+        "operationId": "get_all_records_booking__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BookingResponseScheme"
+                  },
+                  "type": "array",
+                  "title": "Response Get All Records Booking  Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Booking"
+        ],
+        "summary": "Create Booking Record",
+        "description": "Создать запись с бронью",
+        "operationId": "create_booking_record_booking__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookingCreateScheme"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingCreateResponseScheme"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/booking/users": {
+      "get": {
+        "tags": [
+          "Booking"
+        ],
+        "summary": "Get Users Records",
+        "description": "Получить записи пользователя",
+        "operationId": "get_users_records_booking_users_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BookingResponseScheme"
+                  },
+                  "type": "array",
+                  "title": "Response Get Users Records Booking Users Get"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/booking/{booking_id}": {
+      "delete": {
+        "tags": [
+          "Booking"
+        ],
+        "summary": "Delete Booking Record",
+        "description": "Удалить запись с бронью",
+        "operationId": "delete_booking_record_booking__booking_id__delete",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "booking_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Booking Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BookingCreateResponseScheme": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "User Id"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "time_slot_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Time Slot Id"
+          },
+          "booking_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Booking Date"
+          },
+          "success": {
+            "type": "boolean",
+            "title": "Success",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id",
+          "room_id",
+          "time_slot_id",
+          "booking_date"
+        ],
+        "title": "BookingCreateResponseScheme"
+      },
+      "BookingCreateScheme": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "User Id"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "time_slot_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Time Slot Id"
+          },
+          "booking_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Booking Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "room_id",
+          "time_slot_id",
+          "booking_date"
+        ],
+        "title": "BookingCreateScheme"
+      },
+      "BookingResponseScheme": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "User Id"
+          },
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "time_slot_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Time Slot Id"
+          },
+          "booking_date": {
+            "type": "string",
+            "format": "date",
+            "title": "Booking Date"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "user_id",
+          "room_id",
+          "time_slot_id",
+          "booking_date"
+        ],
+        "title": "BookingResponseScheme"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "LoginScheme": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "LoginScheme"
+      },
+      "RoomAvailabilityScheme": {
+        "properties": {
+          "room_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Room Id"
+          },
+          "room_number": {
+            "type": "integer",
+            "title": "Room Number"
+          },
+          "slots": {
+            "items": {
+              "$ref": "#/components/schemas/TimeSlotAvailabilityScheme"
+            },
+            "type": "array",
+            "title": "Slots"
+          }
+        },
+        "type": "object",
+        "required": [
+          "room_id",
+          "room_number",
+          "slots"
+        ],
+        "title": "RoomAvailabilityScheme"
+      },
+      "RoomsResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "room_number": {
+            "type": "integer",
+            "title": "Room Number"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "room_number"
+        ],
+        "title": "RoomsResponseSchema"
+      },
+      "TimeSlotAvailabilityScheme": {
+        "properties": {
+          "time_slot_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Time Slot Id"
+          },
+          "start_time": {
+            "type": "string",
+            "format": "time",
+            "title": "Start Time"
+          },
+          "end_time": {
+            "type": "string",
+            "format": "time",
+            "title": "End Time"
+          },
+          "is_available": {
+            "type": "boolean",
+            "title": "Is Available"
+          }
+        },
+        "type": "object",
+        "required": [
+          "time_slot_id",
+          "start_time",
+          "end_time",
+          "is_available"
+        ],
+        "title": "TimeSlotAvailabilityScheme"
+      },
+      "TimeSlotsResponseSchema": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "start_time": {
+            "type": "string",
+            "format": "time",
+            "title": "Start Time"
+          },
+          "end_time": {
+            "type": "string",
+            "format": "time",
+            "title": "End Time"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "start_time",
+          "end_time"
+        ],
+        "title": "TimeSlotsResponseSchema"
+      },
+      "TokenResponseScheme": {
+        "properties": {
+          "access_token": {
+            "type": "string",
+            "title": "Access Token"
+          },
+          "token_type": {
+            "type": "string",
+            "title": "Token Type",
+            "default": "bearer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "access_token"
+        ],
+        "title": "TokenResponseScheme"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Access token for authentication",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "/api/v1"
+    }
+  ]
+}
