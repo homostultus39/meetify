@@ -8,7 +8,8 @@ from services.database.enums.user_roles import UserRoles
 
 def require_role(*allowed_roles: UserRoles):
     async def role_checker(user = Depends(get_current_user)) -> dict:
-        if user.get("role") not in allowed_roles:
+        user_role = user["role"] if isinstance(user["role"], UserRoles) else UserRoles(user["role"])
+        if user_role not in allowed_roles:
             logger.warning(f"User {user.get('username')} attempted to access restricted resource.")
             raise PermissionDeniedError("Insufficient permissions")
         return user

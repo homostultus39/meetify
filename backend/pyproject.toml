@@ -16,7 +16,9 @@ dependencies = [
     "loguru (>=0.7.3,<0.8.0)",
     "redis (>=8.0.1,<9.0.0)",
     "uvicorn (>=0.51.0,<0.52.0)",
-    "ruff (>=0.16.0,<0.17.0)"
+    "ruff (>=0.16.0,<0.17.0)",
+    "pytest-asyncio (>=1.4.0,<2.0.0)",
+    "httpx (>=0.28.1,<0.29.0)"
 ]
 
 [tool.poetry]
@@ -25,3 +27,6 @@ packages = [{include = "backend", from = "src"}]
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"

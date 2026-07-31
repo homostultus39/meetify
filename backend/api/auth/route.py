@@ -71,7 +71,7 @@ async def refresh_token(session: SessionDep, request: Request, response: Respons
         raise TokenInvalidError("Invalid type of token")
     
     if await TokenRepository.exists(payload["jti"]):
-        raise TokenExpiredError("Provided blocked token")
+        raise TokenExpiredError("Token has expired")
     
     user_record = await get_user_by_user_id(session, user_id)
     if not user_record:

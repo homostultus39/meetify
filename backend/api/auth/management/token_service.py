@@ -1,7 +1,6 @@
+import jwt
 import secrets
 from datetime import datetime, timedelta
-
-import jwt
 
 from api.exceptions.auth import TokenExpiredError, TokenInvalidError
 from management.settings import get_settings
